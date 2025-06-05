@@ -1,0 +1,56 @@
+<div class="login-container">
+  <form class="login-form" [formGroup]="loginForm" (ngSubmit)="login()">
+    <h2>Login</h2>
+
+    <div class="form-group">
+      <label for="username">Usuário</label>
+      <input
+        type="text"
+        id="username"
+        formControlName="username"
+        [class.invalid]="username?.invalid && (username?.dirty || username?.touched)"
+      >
+      <div *ngIf="username?.invalid && (username?.dirty || username?.touched)"
+           class="error-message">
+        <div *ngIf="username?.errors?.['required']">Usuário é obrigatório</div>
+        <div *ngIf="username?.errors?.['minlength']">
+          Mínimo de 3 caracteres
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="password">Senha</label>
+      <input
+        type="password"
+        id="password"
+        formControlName="password"
+        [class.invalid]="password?.invalid && (password?.dirty || password?.touched)"
+      >
+      <div *ngIf="password?.invalid && (password?.dirty || password?.touched)"
+           class="error-message">
+        <div *ngIf="password?.errors?.['required']">Senha é obrigatória</div>
+        <div *ngIf="password?.errors?.['minlength']">
+          Mínimo de 6 caracteres
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="errorMessage" class="error-message server-error">
+      {{ errorMessage }}
+    </div>
+
+    <button
+      type="submit"
+      class="login-button"
+      [disabled]="loginForm.invalid || isLoading"
+    >
+      {{ isLoading ? 'Carregando...' : 'Entrar' }}
+    </button>
+
+    <div class="register-link">
+      Não tem conta?
+      <a (click)="goToRegister()">Criar conta</a>
+    </div>
+  </form>
+</div>

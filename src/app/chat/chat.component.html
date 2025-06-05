@@ -1,0 +1,50 @@
+<div class="chat-container">
+  <h1>Suporte Psicológico com IA 🤖</h1>
+  <p class="disclaimer">
+    Este chatbot oferece suporte psicológico inicial através de inteligência artificial.
+    <strong>Não substitui atendimento profissional.</strong>
+  </p>
+
+  <div class="chat-window" #chatContainer>
+    <div *ngFor="let message of messages" class="message"
+         [class.bot]="message.isBot" [class.user]="!message.isBot"
+         [class.error]="message.error">
+      <div class="message-content" [innerHTML]="message.content | markdown"></div>
+      <div class="message-time">{{ message.timestamp | date:'HH:mm' }}</div>
+    </div>
+
+    <div *ngIf="isLoading" class="loading-indicator">
+      <mat-spinner diameter="30"></mat-spinner>
+      <span>Analisando sua mensagem...</span>
+    </div>
+
+    <div *ngIf="messages.length === 0" class="empty-state">
+      <mat-icon>psychology_alt</mat-icon>
+      <p>Como posso ajudar você hoje?</p>
+    </div>
+  </div>
+
+  <div class="input-container">
+    <mat-form-field appearance="outline" class="chat-input">
+      <mat-label>Digite sua mensagem...</mat-label>
+      <textarea matInput [(ngModel)]="prompt" rows="3"
+                [disabled]="isLoading"
+                (keydown.enter)="$event.preventDefault(); sendPrompt()"
+                placeholder="Exemplo: Estou me sentindo ansioso ultimamente..."></textarea>
+    </mat-form-field>
+
+    <button mat-flat-button color="primary" class="send-button"
+            (click)="sendPrompt()"
+            [disabled]="!prompt.trim() || isLoading">
+      <mat-icon>send</mat-icon>
+      Enviar
+    </button>
+  </div>
+
+  <div *ngIf="messages.length > 0" class="retry-section">
+    <button mat-button color="warn" (click)="retryLastMessage()" *ngIf="messages[messages.length-1]?.error">
+      <mat-icon>refresh</mat-icon>
+      Tentar novamente
+    </button>
+  </div>
+</div>

@@ -1,0 +1,78 @@
+<div class="register-container">
+  <h2>Criar Conta</h2>
+  <form [formGroup]="registerForm" (ngSubmit)="register()">
+    <div class="form-group">
+      <label for="username">Usuário</label>
+      <input
+        type="text"
+        id="username"
+        formControlName="username"
+        [class.invalid]="username?.invalid && (username?.dirty || username?.touched)"
+      >
+      <div class="error-message">
+        <div *ngIf="username?.errors?.['required']">Usuário é obrigatório</div>
+        <div *ngIf="username?.errors?.['minlength']">
+          Mínimo de 3 caracteres
+        </div>
+        <div *ngIf="username?.errors?.['pattern']">
+          Apenas letras, números e _
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="password">Senha</label>
+      <input
+        type="password"
+        id="password"
+        formControlName="password"
+        [class.invalid]="password?.invalid && (password?.dirty || password?.touched)"
+      >
+      <div class="error-message">
+        <div *ngIf="password?.errors?.['required']">Senha é obrigatória</div>
+        <div *ngIf="password?.errors?.['minlength']">
+          Mínimo de 6 caracteres
+        </div>
+        <div *ngIf="password?.errors?.['pattern']">
+          Deve conter letras maiúsculas, minúsculas e números
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="confirmPassword">Confirmar Senha</label>
+      <input
+        type="password"
+        id="confirmPassword"
+        formControlName="confirmPassword"
+        [class.invalid]="registerForm?.errors?.['passwordMismatch']"
+      >
+      <div class="error-message">
+        <div *ngIf="registerForm?.errors?.['passwordMismatch']">
+          As senhas não coincidem
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="errorMessage" class="error-message server-error">
+      {{ errorMessage }}
+    </div>
+
+    <div *ngIf="successMessage" class="success-message">
+      {{ successMessage }}
+    </div>
+
+    <button
+      type="submit"
+      class="register-button"
+      [disabled]="registerForm.invalid || isLoading"
+    >
+      {{ isLoading ? 'Carregando...' : 'Cadastrar' }}
+    </button>
+
+    <div class="login-link">
+      Já tem conta?
+      <a (click)="goToLogin()">Faça login</a>
+    </div>
+  </form>
+</div>
