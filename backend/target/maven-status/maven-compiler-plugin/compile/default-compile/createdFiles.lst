@@ -7,8 +7,10 @@ com\tcc\chatbot\repository\ChatMessageRepository.class
 com\tcc\chatbot\controller\AuthenticationController$AuthRequest.class
 com\tcc\chatbot\controller\AuthResponse.class
 com\tcc\chatbot\filter\JwtAuthenticationFilter.class
+com\tcc\chatbot\config\CorsConfig.class
 com\tcc\chatbot\model\User.class
 com\tcc\chatbot\service\GemmaService.class
+com\tcc\chatbot\config\CorsConfig$1.class
 com\tcc\chatbot\service\UserService.class
 com\tcc\chatbot\dto\ChatRequest.class
 com\tcc\chatbot\controller\GemmaController.class

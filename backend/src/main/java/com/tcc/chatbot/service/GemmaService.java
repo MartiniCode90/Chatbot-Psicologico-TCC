@@ -17,6 +17,7 @@ import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.ResourceAccessException;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.List;
 
 @Service
 public class GemmaService {
@@ -42,17 +43,21 @@ public class GemmaService {
         log.info("Iniciando processamento da pergunta: '{}'", prompt);
 
         try {
+            String systemPrompt = "Você é um psicólogo assistente virtual.  Forneça respostas empáticas, informativas e concisas.  Seja cuidadoso ao lidar com tópicos sensíveis e sempre incentive o usuário a procurar ajuda profissional se necessário.";
+
             Map<String, Object> req = new HashMap<>();
             req.put("model", model);
             req.put("prompt", prompt);
             req.put("stream", false);
+            req.put("system", systemPrompt);
+
 
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
 
             HttpEntity<Map<String,Object>> requestEntity = new HttpEntity<>(req, headers);
 
-            log.debug("Enviando requisição para URL: {}", url + "/generate");
+            log.debug("Enviando requisição para URL: {}", url + "/api/generate");
             ResponseEntity<Map> response = restTemplate.postForEntity(
                     url + "/api/generate", requestEntity, Map.class);
 

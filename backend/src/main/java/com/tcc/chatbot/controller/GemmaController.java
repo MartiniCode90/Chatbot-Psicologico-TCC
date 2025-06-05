@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.http.ResponseEntity;
 
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin(originPatterns = "http://localhost:4300")
 public class GemmaController {
 
     private final GemmaService gemmaService;
@@ -25,4 +25,5 @@ public class GemmaController {
         String resposta = gemmaService.generateText(request.prompt());
         return ResponseEntity.ok(new ChatResponse(resposta));
     }
+
 }
